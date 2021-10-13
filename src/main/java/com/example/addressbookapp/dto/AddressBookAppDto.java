@@ -8,4 +8,5 @@ public class AddressBookAppDto {
     private int id;
     private String name;
     private int pincode;
+
 }
