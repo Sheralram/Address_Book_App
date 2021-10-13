@@ -4,9 +4,13 @@ import com.example.addressbookapp.dto.AddressBookAppDto;
 import com.example.addressbookapp.model.AddressBookApp;
 
 import java.util.List;
-
+/**
+ * @author - Ramkrishna Sheral
+ * @version - 0.0.1
+ * @since - 13/10/2021
+ */
 public interface IAddressBookAppService {
-    List<AddressBookApp>getAllContacts();
+    List<AddressBookApp> getAllContacts();
 
     AddressBookApp getContactById(int contactId);
 
