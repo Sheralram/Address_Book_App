@@ -5,8 +5,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class AddressBookAppDto {
-private String name;
-private String city;
-private String pincode;
+public class ResponseDto {
+    private String message;
+    private Object data;
 }

@@ -1,5 +1,6 @@
 package com.example.addressbookapp.model;
 
+import com.example.addressbookapp.dto.AddressBookAppDto;
 import lombok.Data;
 
 import javax.persistence.Entity;
@@ -14,12 +15,16 @@ import javax.persistence.Id;
  *
  * */
 @Data
-@Entity
 public class AddressBookApp {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private String name;
-    private int pincode;
+    private String city;
+    private String pincode;
 
+    public AddressBookApp(int id, AddressBookAppDto addressBookAppDto){
+        this.id = id;
+        this.name = addressBookAppDto.getName();
+        this.city = addressBookAppDto.getCity();
+        this.pincode = addressBookAppDto.getPincode();
+    }
 }
