@@ -1,6 +1,7 @@
 package com.example.addressbookapp.service;
 
 import com.example.addressbookapp.dto.AddressBookAppDto;
+import com.example.addressbookapp.exception.CustomException;
 import com.example.addressbookapp.model.AddressBookApp;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,12 +24,14 @@ public class AddressBookAppService implements IAddressBookAppService {
 
     @Override
     public List<AddressBookApp> getAllContacts() {
+
         return addressBookList;
     }
 
     @Override
-    public AddressBookApp getContactById(int contactId) {
-        return addressBookList.get(contactId - 1);
+    public AddressBookApp getContactById(int contactId)
+    {
+        return addressBookList.stream().filter(id -> id.getId() == contactId).findFirst().orElseThrow(() -> new CustomException("Contact id not found"));
     }
 
     @Override
@@ -49,6 +52,7 @@ public class AddressBookAppService implements IAddressBookAppService {
 
     @Override
     public void deleteContact(int contactId) {
+        addressBookList.stream().filter(id -> id.getId() == contactId).findFirst().orElseThrow(() -> new CustomException("Employee id not found"));
         addressBookList.remove(contactId - 1);
     }
 }

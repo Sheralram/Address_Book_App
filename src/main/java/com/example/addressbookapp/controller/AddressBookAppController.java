@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -26,7 +27,11 @@ public class AddressBookAppController {
 
     @Autowired
     AddressBookAppService adressBookService;
-
+    /**
+     * Function to perform Http Various request
+     *
+     * @return List of contacts from addressbook
+     */
 
     @GetMapping(value = "/get")
         public ResponseEntity<ResponseDto> getAllContacts() {
@@ -36,7 +41,12 @@ public class AddressBookAppController {
             log.info("Received all Contacts");
             return new ResponseEntity<ResponseDto>(responseDto, HttpStatus.OK);
         }
-
+    /**
+     * Function to perform Http Get request
+     *
+     * @param contactId unique identifier to find contact
+     * @return contact using unique identifier
+     */
         @GetMapping(value = "/get/{contactId}")
         public ResponseEntity<ResponseDto> getContactById(@PathVariable(value = "contactId") int contactId) {
             AddressBookApp addressBook = null;
@@ -46,8 +56,15 @@ public class AddressBookAppController {
             return new ResponseEntity<ResponseDto>(responseDto, HttpStatus.OK);
         }
 
+    /**
+     * Function to perform Http Post request
+     *
+     * @param addressBookDto contact info data in the form of Json
+     * @return add the contact to addressbook
+     */
+
         @PostMapping(value = "/addcontact")
-        public ResponseEntity<ResponseDto> addContact(@RequestBody AddressBookAppDto addressBookDto) {
+        public ResponseEntity<ResponseDto> addContact(@Valid @RequestBody AddressBookAppDto addressBookDto) {
             AddressBookApp addressBook = null;
             addressBook = adressBookService.addContact(addressBookDto);
             ResponseDto responseDto = new ResponseDto("Added Address ", addressBook);
@@ -55,14 +72,29 @@ public class AddressBookAppController {
             return new ResponseEntity<ResponseDto>(responseDto, HttpStatus.OK);
         }
 
+    /**
+     * Function to perform Http Put request
+     *
+     * @param contactId      unique identifier of contact
+     * @param addressBookDto contact data in addressbook
+     * @return update contact data by using unique id
+     */
+
         @PutMapping("/update/{contactId}")
-        public ResponseEntity<ResponseDto> updateContact(@PathVariable(value = "contactId") int contactId, @RequestBody AddressBookAppDto addressBookDto) {
+        public ResponseEntity<ResponseDto> updateContact(@PathVariable(value = "contactId") int contactId,@Valid @RequestBody AddressBookAppDto addressBookDto) {
             AddressBookApp addressBook = null;
             addressBook = adressBookService.updateContact(contactId, addressBookDto);
             ResponseDto responseDto = new ResponseDto("updated Address " + contactId, addressBook);
             log.info("Update Contact is Successfully");
             return new ResponseEntity<ResponseDto>(responseDto, HttpStatus.OK);
         }
+    /**
+     * Function to perform Http Delete request
+     *
+     * @param contactId unique identifier of contact
+     * @return ResponseEntity with message
+     */
+
 
         @DeleteMapping("/delete/{contactId}")
         public ResponseEntity<ResponseDto> deleteContact(@PathVariable(value = "contactId") int contactId) {
@@ -71,4 +103,5 @@ public class AddressBookAppController {
             log.info("Delete Contact is Successully");
             return new ResponseEntity<ResponseDto>(responseDto, HttpStatus.OK);
         }
+
     }
